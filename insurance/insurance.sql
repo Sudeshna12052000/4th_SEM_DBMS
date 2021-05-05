@@ -94,3 +94,29 @@ insert into participated values ('A05','KA071155',155, 50000);
 commit;
 
 select * from participated;
+
+update participated 
+set damage_amount = 2500
+where reg_num='KA031111';
+
+select * from participated;
+
+insert into accident values(101,'2020-12-01','Xavier Road');
+insert into participated values('A01','KA031111',101, 1001);
+commit;
+select * from accident;
+select * from participated;
+
+insert into car values('KA01010', 'Accord', 2002);
+insert into owns values('A02', 'KA01010');
+insert into accident values(200, '2008-12-01', 'Pinto Road');
+insert into participated values('A02', 'KA01010', 200, 500);
+commit;
+
+select * from car;
+select * from owns;
+select * from accident;
+select * from participated;
+
+select count(*) from accident where year(accident_date)=2008;
+select count(*) from participated where reg_num in ( select reg_num from car where model="Accord");
