@@ -55,7 +55,7 @@ insert into bank_account values(6, 'SBI_ShivajiRoad', 4000);
 insert into bank_account values(8, 'SBI_ResidencyRoad', 4000);
 insert into bank_account values(9, 'SBI_ParliamentRoad', 3000);
 insert into bank_account values(10, 'SBI_ResidencyRoad', 5000);
-insert into bank_account values(11, 'SBI_Jantarmantar', 2000);
+insert into bank_account values(11, 'SBI_Jantarmantar', 2000); 
 commit;
 
 insert into bank_customer values ('Avinash', 'Bull_Temple_Road', 'Bangalore');
@@ -68,11 +68,11 @@ commit;
 insert into depositer values('Avinash', 1);
 insert into depositer values('Dinesh', 2);
 insert into depositer values('Nikhil', 4);
-insert into depositer values('Ravi', 5);
+insert into depositer values('Ravi', 5);   
 insert into depositer values('Avinash', 8);
 insert into depositer values('Nikhil', 9);
 insert into depositer values('Dinesh', 10);
-insert into depositer values('Nikhil', 11);
+insert into depositer values('Nikhil', 11); 
 commit;
 
 insert into loan values(1, 'SBI_Chamrajpet', 1000);
@@ -89,5 +89,20 @@ select * from bank_customer;
 select * from depositer;
 select * from loan;
 
+select distinct c.customer_name from bank_customer c,bank_account b where exists(select d.customer_name,count(d.customer_name) from depositer d,bank_account ba where ba.accno = d.accno and 
+c.customer_name = d.customer_name and ba.branch_name = 'SBI_ResidencyRoad' group by d.customer_name having count(d.customer_name)>=2);
+
+
+select d.customer_name from depositer d,branch b,bank_account a 
+where b.branch_name=a.branch_name
+AND a.accno=d.accno
+and branch_city='Delhi'
+group by d.customer_name 
+ HAVING COUNT(distinct b.branch_name)=(
+                SELECT COUNT(branch_name)
+                FROM branch
+                WHERE branch_city='Delhi');
+
+
+
 delete from bank_account where branch_name in (select branch_name from branch where branch_city = 'Bombay');
-select * from bank_account;
